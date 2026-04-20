@@ -1,0 +1,1 @@
+export const DOCENTE_SERVICE = 'DOCENTES_SERVICE';
