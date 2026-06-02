@@ -1,4 +1,14 @@
-import { Body, Controller, Inject, Post, Get, Param, Put, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Inject,
+  Post,
+  Get,
+  Param,
+  Put,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ESTUDIANTE_SERVICE } from 'src/config/service';
 import { CreateEstudianteDto } from './dto/create-estudiante.dto';
@@ -7,7 +17,7 @@ import { CreateEstudianteDto } from './dto/create-estudiante.dto';
 export class EstudiantesController {
   constructor(
     @Inject(ESTUDIANTE_SERVICE) private readonly estudianteClient: ClientProxy,
-  ) {}
+  ) { }
 
   @Get()
   getAll() {
@@ -15,7 +25,7 @@ export class EstudiantesController {
   }
 
   @Get(':id')
-  getOne(@Param('id') id: number) {
+  getOne(@Param('id', ParseIntPipe) id: number) {
     return this.estudianteClient.send({ cmd: 'get_one_student' }, id);
   }
 
@@ -25,12 +35,15 @@ export class EstudiantesController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() estudianteDto: any) {
-    return this.estudianteClient.send({ cmd: 'update_student' }, { id, ...estudianteDto });
+  update(@Param('id', ParseIntPipe) id: number, @Body() estudianteDto: any) {
+    return this.estudianteClient.send(
+      { cmd: 'update_student' },
+      { id, estudianteDto },
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.estudianteClient.send({ cmd: 'remove_student' }, id);
   }
 }
