@@ -1,0 +1,1 @@
+export const FILE_SERVICE = 'FILES_SERVICE';
