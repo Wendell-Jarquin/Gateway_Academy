@@ -10,8 +10,8 @@ import { EtniasController } from './etnias.controller';
         name: ESTUDIANTE_SERVICE,
         transport: Transport.TCP,
         options: {
-          host: process.env.MICROSERVICE_HOST,
-          port: Number(process.env.MICROSERVICE_PORT),
+          host: process.env.ESTUDIANTES_HOST || 'localhost',
+          port: Number(process.env.ESTUDIANTES_SERVICE_PORT) || 3001,
         },
       },
     ]),
