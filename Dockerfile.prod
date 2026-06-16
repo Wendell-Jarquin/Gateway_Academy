@@ -22,7 +22,7 @@ COPY . .
 
 RUN npm run build
 
-RUN npm ci -f --only=production && npm cache clean --force
+RUN npm prune --omit=dev && npm cache clean --force
 
 # 4. Prod
 
@@ -36,6 +36,6 @@ COPY --from=build /usr/src/app/dist ./dist
 ENV NODE_ENV=production
 
 #EXPOSE Y COLOCAS EL NUMERO DEL PUERTO EN EL QUE CORRE TU MICROSERVICIO
-EXPOSE 3001
+EXPOSE 3000
 
 CMD ["node", "dist/main.js"]
